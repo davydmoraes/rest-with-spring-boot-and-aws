@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.davyd.models.Person;
+import com.davyd.data.vo.PersonVO;
 import com.davyd.services.PersonService;
 
 @RestController
-@RequestMapping(value = "/person")
+@RequestMapping(value = "/person/v1")
 public class PersonController {
 
 	@Autowired
@@ -26,7 +26,7 @@ public class PersonController {
 
 	@GetMapping(value = "/{id}", //
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person findById(@PathVariable(value = "id") Long id) throws Exception {
+	public PersonVO findById(@PathVariable(value = "id") Long id) throws Exception {
 
 		return personService.findById(id);
 	}
@@ -41,18 +41,18 @@ public class PersonController {
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, //
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Person create(@RequestBody Person person) throws Exception {
+	public PersonVO create(@RequestBody PersonVO person) throws Exception {
 		return personService.create(person);
 	}
 
 	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, //
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Person update(@RequestBody Person person) throws Exception {
+	public PersonVO update(@RequestBody PersonVO person) throws Exception {
 		return personService.update(person);
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Person> findAll() throws Exception {
+	public List<PersonVO> findAll() throws Exception {
 		return personService.findAll();
 	}
 
