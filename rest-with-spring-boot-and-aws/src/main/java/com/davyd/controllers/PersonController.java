@@ -3,7 +3,6 @@ package com.davyd.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.davyd.data.vo.PersonVO;
 import com.davyd.services.PersonService;
+import com.davyd.utils.MediaType;
 
 @RestController
 @RequestMapping(value = "/person/v1")
@@ -25,7 +25,7 @@ public class PersonController {
 	private PersonService personService;
 
 	@GetMapping(value = "/{id}", //
-			produces = MediaType.APPLICATION_JSON_VALUE)
+			produces = { MediaType.JSON, MediaType.XML, MediaType.YML })
 	public PersonVO findById(@PathVariable(value = "id") Long id) throws Exception {
 
 		return personService.findById(id);
@@ -39,19 +39,19 @@ public class PersonController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, //
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(produces = { MediaType.JSON, MediaType.XML, MediaType.YML }, //
+			consumes = { MediaType.JSON, MediaType.XML, MediaType.YML })
 	public PersonVO create(@RequestBody PersonVO person) throws Exception {
 		return personService.create(person);
 	}
 
-	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, //
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(produces = { MediaType.JSON, MediaType.XML, MediaType.YML }, //
+			consumes = { MediaType.JSON, MediaType.XML, MediaType.YML })
 	public PersonVO update(@RequestBody PersonVO person) throws Exception {
 		return personService.update(person);
 	}
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = { MediaType.JSON, MediaType.XML, MediaType.YML })
 	public List<PersonVO> findAll() throws Exception {
 		return personService.findAll();
 	}
