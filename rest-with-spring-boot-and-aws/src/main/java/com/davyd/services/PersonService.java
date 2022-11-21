@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.davyd.controllers.PersonController;
 import com.davyd.data.vo.PersonVO;
+import com.davyd.exceptions.RequiredObjectIsNullException;
 import com.davyd.exceptions.ResourceNotFoundException;
 import com.davyd.mapper.DozerMapper;
 import com.davyd.models.Person;
@@ -36,6 +37,9 @@ public class PersonService {
 	public PersonVO create(PersonVO person) throws Exception {
 		logger.info("Creating a new person!");
 
+		if (person == null)
+			throw new RequiredObjectIsNullException();
+
 		var output = personRepository.save(DozerMapper.parseObject(person, Person.class));
 
 		PersonVO personVO = DozerMapper.parseObject(output, PersonVO.class);
@@ -45,6 +49,9 @@ public class PersonService {
 
 	public PersonVO update(PersonVO personVO) throws Exception {
 		logger.info("Updating person!");
+		
+		if (personVO == null)
+			throw new RequiredObjectIsNullException();
 
 		Person person = personRepository.findById(personVO.getKey()).//
 				orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
